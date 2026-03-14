@@ -90,6 +90,12 @@ const TrackRenderer = (() => {
       padding: 4 * s,
     });
 
+    // Store the bounding-box centre in track-pixel coordinates so that
+    // connection-point transforms are not skewed by indicator circles or
+    // stroke widths (which inflate group.width/height).
+    group._geomOffsetX = group.left;
+    group._geomOffsetY = group.top;
+
     return group;
   }
 
@@ -470,13 +476,13 @@ const TrackRenderer = (() => {
     const angle = (group.angle || 0) * DEG;
 
     return def.connections.map((c, i) => {
-      // Connection point relative to group center
-      const bbox = group.getBoundingRect();
-      const gw = group.width;
-      const gh = group.height;
-      // Local coords from def are relative to origin; group centers them
-      const lx = c.x * group._pxPerMm - gw / 2;
-      const ly = c.y * group._pxPerMm - gh / 2;
+      // Use the stored geometry-origin offset (bounding-box centre in track
+      // pixel coords) so connection positions are not skewed by indicator
+      // circles or stroke widths that inflate group.width/height.
+      const offsetX = (group._geomOffsetX !== undefined) ? group._geomOffsetX : group.width / 2;
+      const offsetY = (group._geomOffsetY !== undefined) ? group._geomOffsetY : group.height / 2;
+      const lx = c.x * group._pxPerMm - offsetX;
+      const ly = c.y * group._pxPerMm - offsetY;
 
       const cos = Math.cos(angle);
       const sin = Math.sin(angle);

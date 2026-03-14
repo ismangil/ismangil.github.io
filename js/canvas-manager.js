@@ -122,6 +122,7 @@ const CanvasManager = (() => {
     // Only draw grid if grid lines aren't too close together
     if (gridPx < 8) {
       canvas.set('backgroundColor', '#1a1a2e');
+      canvas.requestRenderAll();
       return;
     }
 
