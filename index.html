@@ -1,7 +1,91 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <h1>Tabik Dunia</h1>
-    <p>I'm hosted with GitHub Pages.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#16213e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="RailLayout">
+  <title>Rail Layout Designer</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <!-- Toolbar -->
+  <header id="toolbar">
+    <div class="toolbar-group">
+      <button id="btn-scale" class="toolbar-btn" title="Toggle Scale">T</button>
+      <span class="toolbar-divider"></span>
+      <button id="btn-undo" class="toolbar-btn" title="Undo" disabled>&#8630;</button>
+      <button id="btn-redo" class="toolbar-btn" title="Redo" disabled>&#8631;</button>
+      <button id="btn-delete" class="toolbar-btn" title="Delete Selected">&#10005;</button>
+      <button id="btn-rotate-cw" class="toolbar-btn" title="Rotate CW 15°">&#8635;</button>
+      <button id="btn-rotate-ccw" class="toolbar-btn" title="Rotate CCW 15°">&#8634;</button>
+    </div>
+    <div class="toolbar-group">
+      <button id="btn-zoom-in" class="toolbar-btn" title="Zoom In">+</button>
+      <span id="zoom-level" class="toolbar-label">100%</span>
+      <button id="btn-zoom-out" class="toolbar-btn" title="Zoom Out">&minus;</button>
+      <button id="btn-zoom-fit" class="toolbar-btn" title="Zoom to Fit">&#9635;</button>
+      <span class="toolbar-divider"></span>
+      <button id="btn-save" class="toolbar-btn" title="Save Layout">&#128190;</button>
+      <button id="btn-load" class="toolbar-btn" title="Load Layout">&#128194;</button>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <div id="app-container">
+    <!-- Track palette -->
+    <aside id="palette">
+      <div id="palette-header">
+        <span id="palette-title">Track Pieces</span>
+      </div>
+      <div id="palette-list"></div>
+    </aside>
+
+    <!-- Canvas area -->
+    <main id="canvas-area">
+      <canvas id="layout-canvas"></canvas>
+    </main>
+  </div>
+
+  <!-- Status bar -->
+  <footer id="status-bar">
+    <span id="status-scale">Scale: T</span>
+    <span id="status-pieces">Pieces: 0</span>
+    <span id="status-zoom">Zoom: 100%</span>
+    <span id="status-hint">Tap a track piece, then tap the canvas to place</span>
+  </footer>
+
+  <!-- Save/Load Modal -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div id="modal" class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Save Layout</h3>
+        <button id="modal-close" class="modal-close-btn">&times;</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Fabric.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/fabric@6.4.3/dist/index.js"></script>
+
+  <!-- App modules -->
+  <script src="js/track-data.js"></script>
+  <script src="js/track-renderer.js"></script>
+  <script src="js/snap-engine.js"></script>
+  <script src="js/canvas-manager.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
 </html>
