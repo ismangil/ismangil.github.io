@@ -133,13 +133,15 @@ const SnapEngine = (() => {
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
 
-    // Get the group's internal dimensions to find center offset
-    const w = group.width;
-    const h = group.height;
+    // Use the stored geometry-origin offset (bounding-box centre in track
+    // pixel coords) so connection positions are not skewed by indicator
+    // circles or stroke widths that inflate group.width/height.
+    const offsetX = (group._geomOffsetX !== undefined) ? group._geomOffsetX : group.width / 2;
+    const offsetY = (group._geomOffsetY !== undefined) ? group._geomOffsetY : group.height / 2;
 
     return def.connections.map((c, i) => {
-      const lx = c.x * pxPerMm - w / 2;
-      const ly = c.y * pxPerMm - h / 2;
+      const lx = c.x * pxPerMm - offsetX;
+      const ly = c.y * pxPerMm - offsetY;
       return {
         x: cx + lx * cos - ly * sin,
         y: cy + lx * sin + ly * cos,

@@ -282,7 +282,7 @@ const App = (() => {
   function saveUndoState() {
     const state = canvas.toJSON([
       'trackId', 'trackCode', 'trackType', 'trackDef',
-      'connStates', '_pxPerMm'
+      'connStates', '_pxPerMm', 'connIndex', '_geomOffsetX', '_geomOffsetY'
     ]);
     undoStack.push(JSON.stringify(state));
     if (undoStack.length > MAX_UNDO) undoStack.shift();

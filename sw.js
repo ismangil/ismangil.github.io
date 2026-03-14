@@ -42,7 +42,9 @@ self.addEventListener('fetch', (event) => {
       return fetch(event.request).then((response) => {
         if (response.ok) {
           const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          caches.open(CACHE_NAME)
+            .then((cache) => cache.put(event.request, clone))
+            .catch(() => { /* ignore quota / private-mode errors */ });
         }
         return response;
       });

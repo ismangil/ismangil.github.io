@@ -26,7 +26,7 @@ const Storage = (() => {
   function saveLayout(canvas, name, scale) {
     const data = canvas.toJSON([
       'trackId', 'trackCode', 'trackType', 'trackDef',
-      'connStates', '_pxPerMm'
+      'connStates', '_pxPerMm', 'connIndex', '_geomOffsetX', '_geomOffsetY'
     ]);
     const saves = getSaves();
     saves[name] = {
@@ -77,7 +77,7 @@ const Storage = (() => {
     try {
       const data = canvas.toJSON([
         'trackId', 'trackCode', 'trackType', 'trackDef',
-        'connStates', '_pxPerMm'
+        'connStates', '_pxPerMm', 'connIndex', '_geomOffsetX', '_geomOffsetY'
       ]);
       localStorage.setItem(AUTOSAVE_KEY, JSON.stringify({ data, scale }));
     } catch {
